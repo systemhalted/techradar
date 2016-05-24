@@ -68,7 +68,7 @@ var radar_data = [
             {"name":"Build Pipelines", "pc":{"r":180,"t":100},"movement":"c"},   
             {"name":"Data Informed Decion Making", "pc":{"r":130,"t":110},"movement":"c"},
             {"name":"Polygot Programming", "pc":{"r":180,"t":170},"movement":"c"},
-            { name: 'internal load balancing off F5^', pc: { r: 180, t: 133 }, movement: 'c' },
+            {"name":"internal load balancing off F5^", pc: { r: 180, t: 133 }, movement: 'c' },
             {"name":"Isolated dev envs", "pc":{"r":180,"t":125},"movement":"c"},  
             {"name":"Edge Services", "pc":{"r":130,"t":160},"movement":"c"}, 
             {"name":"Clean Code", "pc":{"r":130,"t":120},"movement":"c"},
