@@ -36,17 +36,9 @@ jasmineFiles.forEach(file => {
   copyFile(path.join(jasmineBase, file), path.join(publicLib, 'jasmine-core', file));
 });
 
-// Protovis
-const protovisSrc = resolveFirst([
-  'protovis/protovis.js',
-  'protovis/protovis-d3.3.js',
-  'protovis/protovis-d3.2.js',
-  'protovis/dist/protovis.js'
-]);
-
-if (!protovisSrc) {
-  throw new Error('Unable to find a protovis bundle in node_modules. Adjust scripts/copy-libs.js with the correct path.');
+// Protovis (vendored under vendor/protovis/protovis.js)
+const protovisSrc = path.join(root, 'vendor', 'protovis', 'protovis.js');
+if (!fs.existsSync(protovisSrc)) {
+  throw new Error('Missing vendor/protovis/protovis.js. Restore it or update copy-libs.js with a valid source.');
 }
-
-const protovisDestName = path.basename(protovisSrc);
-copyFile(protovisSrc, path.join(publicLib, 'protovis', protovisDestName));
+copyFile(protovisSrc, path.join(publicLib, 'protovis', 'protovis.js'));

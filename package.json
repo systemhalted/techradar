@@ -8,8 +8,7 @@
   },
   "dependencies": {
     "jasmine-core": "^5.1.1",
-    "lodash": "^4.17.21",
-    "protovis": "^3.3.1"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "typescript": "^3.7.4"
