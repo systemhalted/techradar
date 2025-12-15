@@ -37,5 +37,5 @@ Running the radar
 
 Development
 - Edit files in `src/` and run `tsc` to emit JS into `public/dist/` (tsconfig is set up for this).
-- `public/radar_test.html` runs Jasmine checks for the coordinate helpers.
+- Specs live in `src/tests/` and compile to `public/dist/tests/`; run them in the browser via `public/tests.html` (loads Jasmine from `public/lib/`).
 - Keep third-party libs under `public/lib/`; the runtime only depends on the compiled JS in `public/dist/`.
