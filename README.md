@@ -3,19 +3,20 @@ Build Your Own Technology Radar
 
 A lightweight clone of the ThoughtWorks Technology Radar (https://www.thoughtworks.com/radar/) that you can populate with your own data. The radar renders to SVG in the browser using Protovis and jQuery, and ships with auto-layout so you only specify quadrant + ring.
 
-![Technology Radar Sample](/sample_tech_radar.jpg?raw=true)
+![Technology Radar Sample](/public/assets/sample_tech_radar.jpg?raw=true)
 
-What’s inside
-- TypeScript sources compiled to browser-ready JS in `dist/`.
-- Auto-layout: drop coordinates entirely; specify `quadrant` + `ring` and the renderer scatters points within the correct slice. If you need exact placement, you can still supply `pc: { r, t }`.
-- Sample datasets under `radars/` (ThoughtWorks 2010, Wotif 2014, Capital One 2016, and an auto-layout demo).
+Project structure
+- `src/` – TypeScript sources (`radar.ts`, `utils.ts`, `radars/*.ts`, `types.d.ts`).
+- `public/` – Static assets served to the browser: HTML, libs, images, and compiled JS in `public/dist/`.
+- `public/radars/...` – Generated JS datasets (from `src/radars`).
+- `public/lib/` – Third-party libraries (Protovis, Lodash, Jasmine).
 
-Data model
+What the renderer expects
 - Quadrants: Techniques, Tools, Platforms, Languages & Frameworks.
 - Rings (center → outward): Adopt, Trial, Assess, Hold.
-- Item fields: `name` (required), `ring` (required unless `pc` is given), `movement: 't' | 'c'` (triangle for moved items), optional `url`, optional `blipSize`, optional `pc` for manual placement.
+- Item fields: `name` (required), `ring` (required unless `pc` is given), `movement: 't' | 'c'` (triangle for moved items), optional `url`, optional `blipSize`, optional `pc: { r, t }` for manual placement.
 
-Minimal example (see `radars/sample_auto_layout.ts`)
+Minimal example (see `src/radars/sample_auto_layout.ts`)
 ```ts
 var radar_data = [
   {
@@ -30,11 +31,11 @@ var radar_data = [
 ```
 
 Running the radar
-- Option 1: Open `index.html` directly in a browser (uses the prebuilt files in `dist/`).
-- Option 2: Serve locally, e.g. `python -m http.server 8080` then visit `http://localhost:8080/index.html`.
-- Swap datasets by changing the `<script>` in `index.html` to point at a different file in `dist/radars/`.
+- Open `public/index.html` directly in a browser; it uses the prebuilt files in `public/dist/`.
+- Or serve the `public/` directory: `python -m http.server 8080 --directory public` then visit `http://localhost:8080`.
+- Swap datasets by changing the `<script>` in `public/index.html` to point at a different file in `public/dist/radars/`.
 
 Development
-- Edit `.ts` files (`radar.ts`, `utils.ts`, `radars/*.ts`); run `tsc` to emit JS into `dist/`.
-- `radar_test.html` runs Jasmine checks for the coordinate helpers.
-- If you add new libraries, keep using the precompiled JS in `dist/` so the HTML stays zero-build.
+- Edit files in `src/` and run `tsc` to emit JS into `public/dist/` (tsconfig is set up for this).
+- `public/radar_test.html` runs Jasmine checks for the coordinate helpers.
+- Keep third-party libs under `public/lib/`; the runtime only depends on the compiled JS in `public/dist/`.

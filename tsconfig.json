@@ -3,15 +3,14 @@
     "target": "es5",
     "module": "none",
     "lib": ["dom", "es5"],
-    "rootDir": ".",
-    "outDir": "dist",
+    "rootDir": "src",
+    "outDir": "public/dist",
     "strict": false,
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true
   },
   "include": [
-    "*.ts",
-    "radars/*.ts"
+    "src/**/*.ts"
   ]
 }
