@@ -30,7 +30,7 @@ const lodashSrc = require.resolve('lodash/lodash.min.js');
 copyFile(lodashSrc, path.join(publicLib, 'lodash', 'lodash.min.js'));
 
 // Jasmine
-const jasmineBase = path.join(path.dirname(require.resolve('jasmine-core/lib/jasmine-core/jasmine.js')), '..');
+const jasmineBase = path.dirname(require.resolve('jasmine-core/lib/jasmine-core/jasmine.js'));
 const jasmineFiles = ['jasmine.js', 'jasmine-html.js', 'jasmine.css', 'boot0.js', 'boot1.js'];
 jasmineFiles.forEach(file => {
   copyFile(path.join(jasmineBase, file), path.join(publicLib, 'jasmine-core', file));

@@ -44,7 +44,7 @@ Running the radar
 - Swap datasets by changing the `<script>` in `public/index.html` to point at a different file in `public/dist/radars/`.
 
 Development
-- Install deps: `npm install` (copies libraries from node_modules to `public/lib` with `npm run copy:libs`).
+- Install deps: `npm install` (copies libraries from node_modules and `vendor/protovis/protovis.js` to `public/lib` with `npm run copy:libs`).
 - Edit files in `src/` and run `npm run build` (runs `npm run copy:libs` + `tsc`) to emit JS into `public/dist/`.
 - Specs live in `src/tests/` and compile to `public/dist/tests/`; run them in the browser via `public/tests.html` (loads Jasmine from `public/lib/`).
 - Keep third-party libs under `public/lib/`; the runtime only depends on the compiled JS in `public/dist/`.
