@@ -34,7 +34,7 @@ describe("Radar", function () {
         });
         it("polar to cartesian, 20, 270", function () {
             var r = 20, t = 270;
-            expect(Math.round(polar_to_cartesian(r, t)[0])).toEqual(0);
+            expect(Math.abs(Math.round(polar_to_cartesian(r, t)[0]))).toEqual(0);
             expect(Math.round(polar_to_cartesian(r, t)[1])).toEqual(-20);
         });
     });
@@ -45,5 +45,3 @@ describe("Radar", function () {
         });
     });
 });
-jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-jasmine.getEnv().execute();
