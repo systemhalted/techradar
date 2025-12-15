@@ -1,9 +1,10 @@
+(function loadWotifRadar() {
 //This is the title for your window tab, and your Radar
 document.title = "WotifGroup's Technology Radar (December 2014)";
 
 
 //This is the concentic circles that want on your radar
-var radar_arcs = [
+var radar_arcs: RadarArc[] = [
                    {'r':100,'name':'Adopt'}
                   ,{'r':200,'name':'Trial'}
                   ,{'r':300,'name':'Assess'}
@@ -48,7 +49,7 @@ var radar_arcs = [
 var h = 1000;
 var w = 1200;
 
-var radar_data = [
+var radar_data: RadarQuadrant[] = [
     { "quadrant": "Techniques",
         "left" : 45,
         "top" : 18,
@@ -199,3 +200,9 @@ var radar_data = [
         ]
     }
 ];
+
+  (window as any).radar_arcs = radar_arcs;
+  (window as any).radar_data = radar_data;
+  (window as any).h = h;
+  (window as any).w = w;
+})();

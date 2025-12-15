@@ -1,16 +1,16 @@
-function init(h,w) {
+function init(h: number, w: number): void {
   $('#title').text(document.title);  
        
-  function normalizeKey(label) {
+  function normalizeKey(label: string): string {
     return (label || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   }
 
-  var ringIndexByName = {};
+  var ringIndexByName: { [key: string]: number } = {};
   for (var idx = 0; idx < radar_arcs.length; idx++) {
     ringIndexByName[normalizeKey(radar_arcs[idx].name)] = idx;
   }
 
-  function ringIndexForItem(item) {
+  function ringIndexForItem(item: RadarItem): number {
     if (item.ring !== undefined) {
       var mapped = ringIndexByName[normalizeKey(item.ring)];
       if (mapped !== undefined) {
@@ -23,7 +23,7 @@ function init(h,w) {
     return 0;
   }
 
-  function hashSeed(seed) {
+  function hashSeed(seed: string | number): number {
     var hVal = 0;
     var str = (seed || '').toString();
     for (var i = 0; i < str.length; i++) {
@@ -33,7 +33,7 @@ function init(h,w) {
     return (hVal >>> 0) / 0xFFFFFFFF;
   }
 
-  function radiusForRing(ringIndex, seed) {
+  function radiusForRing(ringIndex: number, seed: string | number): number {
     var inner = ringIndex === 0 ? 0 : radar_arcs[ringIndex - 1].r;
     var outer = radar_arcs[ringIndex].r;
     var width = outer - inner;
@@ -44,7 +44,7 @@ function init(h,w) {
     return Math.max(inner + padding, Math.min(rVal, outer - padding));
   }
 
-  function angleRangeForQuadrant(name, index) {
+  function angleRangeForQuadrant(name: string, index: number): AngleRange {
     var key = normalizeKey(name);
     if (key === 'techniques') { return { start: 90, end: 180 }; }
     if (key === 'tools') { return { start: 0, end: 90 }; }
@@ -54,7 +54,7 @@ function init(h,w) {
     return { start: start, end: start + 90 };
   }
 
-  function legendPositionForQuadrant(range, index) {
+  function legendPositionForQuadrant(range: AngleRange, index: number): { left: number; top: number } {
     var defaultLeft = 45;
     var defaultTop = 18;
     if (range.start === 0) { return { left: w - 200 + 30, top: defaultTop }; }
@@ -64,10 +64,10 @@ function init(h,w) {
     return { left: defaultLeft, top: defaultTop + (index * 80) };
   }
 
-  function distributeAngles(range, count) {
+  function distributeAngles(range: AngleRange, count: number): number[] {
     var span = range.end - range.start;
     var step = span / (count + 1);
-    var angles = [];
+    var angles: number[] = [];
     for (var i = 0; i < count; i++) {
       angles.push(range.start + step * (i + 1));
     }
@@ -91,11 +91,11 @@ function init(h,w) {
       item.ringName = radar_arcs[ringIdx] && radar_arcs[ringIdx].name;
     }
 
-    var itemsByRing = _.groupBy(quadrant.items, function(item) { return item.ringIndex; });
+    var itemsByRing = _.groupBy(quadrant.items, function(item: RadarItem) { return item.ringIndex; });
     for (var ringKey in itemsByRing) {
       if (!itemsByRing.hasOwnProperty(ringKey)) { continue; }
       var ringItems = itemsByRing[ringKey];
-      var autoPlaceItems = _.filter(ringItems, function(item) { return !item.pc; });
+      var autoPlaceItems = _.filter(ringItems, function(item: RadarItem) { return !item.pc; });
       if (autoPlaceItems.length === 0) { continue; }
 
       var angles = distributeAngles(range, autoPlaceItems.length);
