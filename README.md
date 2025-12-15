@@ -6,10 +6,18 @@ A lightweight clone of the ThoughtWorks Technology Radar (https://www.thoughtwor
 ![Technology Radar Sample](/public/assets/sample_tech_radar.jpg?raw=true)
 
 Project structure
-- `src/` – TypeScript sources (`radar.ts` renderer, `radar_layout.ts` layout helpers, `coordinates.ts` math helpers, `radars/*.ts`, `types.d.ts`).
+- `src/` – TypeScript sources:
+  - `radar.ts` – entry point that reads global data and renders the radar with Protovis.
+  - `radar_layout.ts` – layout helpers (ring lookup, angle ranges, jittered radius, angle distribution).
+  - `coordinates.ts` – coordinate math helpers (polar/cartesian/raster conversions).
+  - `radars/*.ts` – datasets; each sets `window.radar_arcs`, `window.radar_data`, `h`, `w`.
+  - `types.d.ts` – shared types for arcs, items, quadrants, and the globals.
+  - `tests/*.ts` – Jasmine specs for helpers and coordinates.
 - `public/` – Static assets served to the browser: HTML, libs, images, and compiled JS in `public/dist/`.
-- `public/radars/...` – Generated JS datasets (from `src/radars`).
+- `public/dist/` – Compiled JS from `src/` (including `dist/radars` and `dist/tests`).
 - `public/lib/` – Third-party libraries (Protovis, Lodash, Jasmine).
+- `public/tests.html` – Jasmine runner that pulls compiled specs from `public/dist/tests/`.
+- `public/index.html` – main page that loads libs, a dataset from `dist/radars/`, layout/helpers, and the renderer.
 
 What the renderer expects
 - Quadrants: Techniques, Tools, Platforms, Languages & Frameworks.
