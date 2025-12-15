@@ -1,4 +1,4 @@
-describe("radar_helpers", function() {
+describe("radar_layout helpers", function() {
   var arcs: RadarArc[] = [
     { r: 100, name: "Adopt" },
     { r: 200, name: "Trial" },

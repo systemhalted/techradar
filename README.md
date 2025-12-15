@@ -6,7 +6,7 @@ A lightweight clone of the ThoughtWorks Technology Radar (https://www.thoughtwor
 ![Technology Radar Sample](/public/assets/sample_tech_radar.jpg?raw=true)
 
 Project structure
-- `src/` – TypeScript sources (`radar.ts`, `utils.ts`, `radars/*.ts`, `types.d.ts`).
+- `src/` – TypeScript sources (`radar.ts` renderer, `radar_layout.ts` layout helpers, `coordinates.ts` math helpers, `radars/*.ts`, `types.d.ts`).
 - `public/` – Static assets served to the browser: HTML, libs, images, and compiled JS in `public/dist/`.
 - `public/radars/...` – Generated JS datasets (from `src/radars`).
 - `public/lib/` – Third-party libraries (Protovis, Lodash, Jasmine).
