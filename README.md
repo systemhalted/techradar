@@ -1,24 +1,22 @@
-Build Your Own Technology Radar.
+Build Your Own Technology Radar
+===============================
 
-Inspired by the ThoughtWorks Tech Radar: http://www.thoughtworks.com/radar/.
-
-I love the ThoughtWorks Radar. But it is for all clients, averaged out across industries, organisational maturity and risk adverseness.
+A lightweight clone of the ThoughtWorks Technology Radar (https://www.thoughtworks.com/radar/) that you can populate with your own data. The radar renders to SVG in the browser using Protovis and jQuery, and ships with auto-layout so you only specify quadrant + ring.
 
 ![Technology Radar Sample](/sample_tech_radar.jpg?raw=true)
 
-It is a powerful talking point, but I need it to be customised for particular circumstances.
+What’s inside
+- TypeScript sources compiled to browser-ready JS in `dist/`.
+- Auto-layout: drop coordinates entirely; specify `quadrant` + `ring` and the renderer scatters points within the correct slice. If you need exact placement, you can still supply `pc: { r, t }`.
+- Sample datasets under `radars/` (ThoughtWorks 2010, Wotif 2014, Capital One 2016, and an auto-layout demo).
 
-This Technology Radar has pretty simple functionality, uses a json-like data source and renders SVG within html. Source files are now written in TypeScript and compiled to `dist/` for the browser.
+Data model
+- Quadrants: Techniques, Tools, Platforms, Languages & Frameworks.
+- Rings (center → outward): Adopt, Trial, Assess, Hold.
+- Item fields: `name` (required), `ring` (required unless `pc` is given), `movement: 't' | 'c'` (triangle for moved items), optional `url`, optional `blipSize`, optional `pc` for manual placement.
 
-Data entry is now simpler: just pick the quadrant and ring, the coordinates are generated for you.
-
-- Quadrants: Techniques, Tools, Platforms, Languages & Frameworks
-- Rings (from center outward): Adopt, Trial, Assess, Hold
-- Optional fields: `movement: 't'` to show moved blips (triangles), `url`, `blipSize`
-
-Example (see `radars/sample_auto_layout.ts`):
-
-```
+Minimal example (see `radars/sample_auto_layout.ts`)
+```ts
 var radar_data = [
   {
     quadrant: "Techniques",
@@ -31,8 +29,12 @@ var radar_data = [
 ];
 ```
 
-You can still provide `pc: { r, t }` if you want exact placement, but it is no longer required. The renderer uses the ring/quadrant to distribute blips within the correct slice.
+Running the radar
+- Option 1: Open `index.html` directly in a browser (uses the prebuilt files in `dist/`).
+- Option 2: Serve locally, e.g. `python -m http.server 8080` then visit `http://localhost:8080/index.html`.
+- Swap datasets by changing the `<script>` in `index.html` to point at a different file in `dist/radars/`.
 
 Development
-- Edit `.ts` files (e.g. `radar.ts`, `utils.ts`, `radars/*.ts`) and run `tsc` to emit JavaScript into `dist/`.
-- `index.html` and `radar_test.html` already load the compiled files from `dist/`.
+- Edit `.ts` files (`radar.ts`, `utils.ts`, `radars/*.ts`); run `tsc` to emit JS into `dist/`.
+- `radar_test.html` runs Jasmine checks for the coordinate helpers.
+- If you add new libraries, keep using the precompiled JS in `dist/` so the HTML stays zero-build.
