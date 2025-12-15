@@ -40,6 +40,7 @@ declare var radar_data: RadarQuadrant[];
 declare var h: number;
 declare var w: number;
 declare var radar_title: string | undefined;
+declare function init(h: number, w: number): void;
 
 declare const pv: any;
 declare const _: any;

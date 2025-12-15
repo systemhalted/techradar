@@ -1,58 +1,7 @@
 function init(h: number, w: number): void {
   $('#title').text(document.title);  
        
-  function normalizeKey(label: string): string {
-    return (label || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-  }
-
-  var ringIndexByName: { [key: string]: number } = {};
-  for (var idx = 0; idx < radar_arcs.length; idx++) {
-    ringIndexByName[normalizeKey(radar_arcs[idx].name)] = idx;
-  }
-
-  function ringIndexForItem(item: RadarItem): number {
-    if (item.ring !== undefined) {
-      var mapped = ringIndexByName[normalizeKey(item.ring)];
-      if (mapped !== undefined) {
-        return mapped;
-      }
-    }
-    if (item.pc && item.pc.r !== undefined) {
-      return Math.min(radar_arcs.length - 1, Math.floor(item.pc.r / 100));
-    }
-    return 0;
-  }
-
-  function hashSeed(seed: string | number): number {
-    var hVal = 0;
-    var str = (seed || '').toString();
-    for (var i = 0; i < str.length; i++) {
-      hVal = ((hVal << 5) - hVal) + str.charCodeAt(i);
-      hVal |= 0;
-    }
-    return (hVal >>> 0) / 0xFFFFFFFF;
-  }
-
-  function radiusForRing(ringIndex: number, seed: string | number): number {
-    var inner = ringIndex === 0 ? 0 : radar_arcs[ringIndex - 1].r;
-    var outer = radar_arcs[ringIndex].r;
-    var width = outer - inner;
-    var jitter = (hashSeed(seed) - 0.5) * width * 0.6;
-    var base = inner + width * 0.5;
-    var rVal = base + jitter;
-    var padding = 10;
-    return Math.max(inner + padding, Math.min(rVal, outer - padding));
-  }
-
-  function angleRangeForQuadrant(name: string, index: number): AngleRange {
-    var key = normalizeKey(name);
-    if (key === 'techniques') { return { start: 90, end: 180 }; }
-    if (key === 'tools') { return { start: 0, end: 90 }; }
-    if (key === 'platforms') { return { start: 180, end: 270 }; }
-    if (key === 'languagesframeworks' || key === 'languagesandframeworks' || key === 'languages') { return { start: 270, end: 360 }; }
-    var start = (index % 4) * 90;
-    return { start: start, end: start + 90 };
-  }
+  var ringIndexByName: { [key: string]: number } = buildRingIndexMap(radar_arcs);
 
   function legendPositionForQuadrant(range: AngleRange, index: number): { left: number; top: number } {
     var defaultLeft = 45;
@@ -86,7 +35,7 @@ function init(h: number, w: number): void {
 
     for (var j = 0; j < quadrant.items.length; j++) {
       var item = quadrant.items[j];
-      var ringIdx = ringIndexForItem(item);
+      var ringIdx = ringIndexForItem(item, radar_arcs, ringIndexByName);
       item.ringIndex = ringIdx;
       item.ringName = radar_arcs[ringIdx] && radar_arcs[ringIdx].name;
     }
@@ -101,7 +50,7 @@ function init(h: number, w: number): void {
       var angles = distributeAngles(range, autoPlaceItems.length);
       for (var ai = 0; ai < autoPlaceItems.length; ai++) {
         var autoItem = autoPlaceItems[ai];
-        autoItem.pc = { r: radiusForRing(parseInt(ringKey, 10), autoItem.name), t: angles[ai] };
+        autoItem.pc = { r: radiusForRing(radar_arcs, parseInt(ringKey, 10), autoItem.name), t: angles[ai] };
       }
     }
   }
