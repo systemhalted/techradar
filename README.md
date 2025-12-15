@@ -10,16 +10,25 @@ It is a powerful talking point, but I need it to be customised for particular ci
 
 This Technology Radar has pretty simple functionality, uses json data source and renders SVG within html.
 
-The data currently is provided in a radial format. I chose this and SVG, for the scalable properties. In practice, a table based structure, that automatically lays out the points could be more useful.
+Data entry is now simpler: just pick the quadrant and ring, the coordinates are generated for you.
 
-Eg. {name:'Cool Tech', r:50, t:30}
-Appears in the Top Right Quadrant, in the inner most "Adopt" Sector.
+- Quadrants: Techniques, Tools, Platforms, Languages & Frameworks
+- Rings (from center outward): Adopt, Trial, Assess, Hold
+- Optional fields: `movement: 't'` to show moved blips (triangles), `url`, `blipSize`
 
-Eg. {name:'Bright Shiny Toy 5', r:390, t:30}
-Appears in the Top Right Quadrant, in the outer most "Hold" Sector.
+Example (see `radars/sample_auto_layout.js`):
 
-Appears in the Lower Left Quadrant, in the second "Trial" Sector.
+```
+var radar_data = [
+  {
+    quadrant: "Techniques",
+    color: "#8FA227",
+    items: [
+      { name: "Pair Programming", ring: "Adopt", movement: "c" },
+      { name: "Chaos Experiments", ring: "Assess", movement: "t" }
+    ]
+  }
+];
+```
 
-Where r = radius, and t = theta; the degrees in radians. with 0/360 degrees being the typical right hand x line rotating in an anti-clockwise direction.
-
-See http://en.wikipedia.org/wiki/Polar_coordinates for more details.
+You can still provide `pc: { r, t }` if you want exact placement, but it is no longer required. The renderer uses the ring/quadrant to distribute blips within the correct slice.

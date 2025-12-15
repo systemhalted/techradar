@@ -54,7 +54,7 @@ var radar_data = [
         "top" : 18,
         "color" : "#8FA227",
         "items" : [ 
-            { name: 'Git flow / Pull Requests ^', pc: { r: 230, t: 133 }, movement: 'c' },
+            { name: 'Git flow / Pull Requests ^', pc: { r: 230, t: 133 }, movement: 'c', "url": "http://palakmathur.in" },
             {"name":"Incremental data warehousing", "pc":{"r":250,"t":165},"movement":"c"},    
             {"name":"Events for messages - CQRS", "pc":{"r":225,"t":120},"movement":"c"},
             {"name":"Measure Pipeline disruptions", "pc":{"r":280,"t":110},"movement":"c"}, 
